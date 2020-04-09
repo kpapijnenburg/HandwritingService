@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HandwritingService.DAL\HandwritingService.DAL.csproj" />
+    <ProjectReference Include="..\HandwritingService.Domain\HandwritingService.Domain.csproj" />
+    <ProjectReference Include="..\HandwritingService.Web\HandwritingService.Web.csproj" />
+  </ItemGroup>
+
+</Project>
