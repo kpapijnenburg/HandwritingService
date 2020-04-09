@@ -22,8 +22,4 @@
     <ProjectReference Include="..\HandwritingService.Domain\HandwritingService.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
-
 </Project>

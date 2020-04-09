@@ -16,7 +16,7 @@ namespace HandwritingService.DAL.Configurations
             builder
                 .HasOne(h => h.Note)
                 .WithOne(n => n.Handwriting)
-                .HasForeignKey<Note>(n => n.Id)
+                .HasForeignKey<Note>(n => n.HandwritingId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasData(new Handwriting()
@@ -24,9 +24,9 @@ namespace HandwritingService.DAL.Configurations
                 Id = 1,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
+                State = State.Pending,
                 Image = GetImage(),
-                NoteId = 1,
-            }); ;
+            });
 
         }
 
@@ -38,7 +38,6 @@ namespace HandwritingService.DAL.Configurations
 
             image.Save(stream, image.RawFormat);
             return stream.ToArray();
-
         }
     }
 }

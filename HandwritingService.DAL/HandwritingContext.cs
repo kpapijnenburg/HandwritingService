@@ -1,4 +1,5 @@
-﻿using HandwritingService.Domain;
+﻿using HandwritingService.DAL.Configurations;
+using HandwritingService.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -15,7 +16,8 @@ namespace HandwritingService.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Apply configs
+            modelBuilder.ApplyConfiguration(new HandwritingConfiguration());
+            modelBuilder.ApplyConfiguration(new NoteConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

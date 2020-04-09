@@ -6,7 +6,6 @@ namespace HandwritingService.Domain
     {
         public byte[] Image { get; set; }
         public State State { get; set; }
-        public int NoteId { get; set; }
         public Note Note { get; set; }
     }
 }
