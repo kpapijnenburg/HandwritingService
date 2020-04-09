@@ -4,9 +4,9 @@ using System.Text;
 
 namespace HandwritingService.Domain
 {
-    class BaseEntity
+    public class BaseEntity
     {
-        int Id;
+        public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

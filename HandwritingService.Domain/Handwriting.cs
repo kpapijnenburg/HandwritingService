@@ -2,7 +2,7 @@
 
 namespace HandwritingService.Domain
 {
-    public class Handwriting
+    public class Handwriting : BaseEntity
     {
         public byte[] Image { get; set; }
         public State State { get; set; }
