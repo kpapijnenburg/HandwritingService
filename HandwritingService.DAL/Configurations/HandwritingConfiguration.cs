@@ -32,7 +32,7 @@ namespace HandwritingService.DAL.Configurations
 
         public byte[] GetImage()
         {
-            var image = Image.FromFile("./Assets/text.jpeg");
+            var image = Image.FromFile("./Assets/text.jpg");
 
             using var stream = new MemoryStream();
 
