@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandwritingService.Web", "HandwritingService.Web\HandwritingService.Web.csproj", "{7BA4F04D-AFDC-463B-8F3B-0A3BDF6ED202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandwritingService.Web", "HandwritingService.Web\HandwritingService.Web.csproj", "{7BA4F04D-AFDC-463B-8F3B-0A3BDF6ED202}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandwritingService.DAL", "HandwritingService.DAL\HandwritingService.DAL.csproj", "{E1B3B091-0C30-419A-8D1C-F50B57A71084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandwritingService.DAL", "HandwritingService.DAL\HandwritingService.DAL.csproj", "{E1B3B091-0C30-419A-8D1C-F50B57A71084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandwritingService.Domain", "HandwritingService.Domain\HandwritingService.Domain.csproj", "{6D5A7E86-A49E-427C-B853-E4916FEA6E83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandwritingService.Domain", "HandwritingService.Domain\HandwritingService.Domain.csproj", "{6D5A7E86-A49E-427C-B853-E4916FEA6E83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandwritingService.Tests", "HandwritingService.Tests\HandwritingService.Tests.csproj", "{1DC9ED74-C1CE-431B-92D5-B948967AE077}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandwritingService.Tests", "HandwritingService.Tests\HandwritingService.Tests.csproj", "{1DC9ED74-C1CE-431B-92D5-B948967AE077}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandwritingService.IntegrationTests", "HandwritingService.IntegrationTests\HandwritingService.IntegrationTests.csproj", "{7A3A200E-4BE9-4BD4-810D-36FD4E1D480C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandwritingService.IntegrationTests", "HandwritingService.IntegrationTests\HandwritingService.IntegrationTests.csproj", "{7A3A200E-4BE9-4BD4-810D-36FD4E1D480C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

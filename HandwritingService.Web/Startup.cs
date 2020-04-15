@@ -7,6 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using HandwritingService.DAL;
+using HandwritingService.DAL.Repositories;
+using HandwritingService.Domain;
+using KPA.Database.Abstractions;
 
 namespace HandwritingService.Web
 {
@@ -27,6 +30,8 @@ namespace HandwritingService.Web
 
             services.AddDbContext<HandwritingContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
+
+            services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
