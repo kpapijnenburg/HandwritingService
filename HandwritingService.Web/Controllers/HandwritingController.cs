@@ -38,5 +38,39 @@ namespace HandwritingService.Web.Controllers
             return Ok(handwriting);
         }
 
+        [HttpPost("/api/handwriting")]
+        public async Task<IActionResult> Create(Handwriting handwriting)
+        {
+            var result = await repository.Create(handwriting);
+
+            return Created($"/api/handwriting/{result.Id}", result);
+        }
+
+        [HttpPut("/api/handwriting/{id}")]
+        public async Task<IActionResult> Update(int id, Handwriting handwriting)
+        {
+            var inDb = await repository.GetById(id) != null;
+
+            if(!inDb)
+            {
+                return NotFound();
+            }
+
+            await repository.Update(handwriting);
+
+            return NoContent();
+        }
+
+        [HttpDelete("/api/handwriting/{id}")]
+        public async Task<IActionResult> Delete(int id, Handwriting handwriting)
+        {
+            var inDb = await repository.GetById(id) != null;
+
+            if (!inDb) return NotFound();
+
+            await repository.Delete(handwriting);
+
+            return NoContent();
+        }
     }
 }

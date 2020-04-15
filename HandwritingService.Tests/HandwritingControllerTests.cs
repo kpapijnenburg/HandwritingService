@@ -96,5 +96,127 @@ namespace HandwritingService.Tests
             // Assert
             Assert.IsType<Handwriting>(result.Value);
         }
+
+        [Fact]
+        public async Task Create_HandwritingWasCreated_ReturnsCreatedResult()
+        {
+            var expected = new Handwriting() { Id = 1 };
+
+            repositoryMock.Setup(r => r.Create(It.IsAny<Handwriting>()))
+                .Returns(Task.FromResult(expected));
+
+            // Act
+            var result = await controller.Create(new Handwriting()) as CreatedResult;
+
+            Assert.IsType<CreatedResult>(result);
+        }
+
+        [Fact]
+        public async Task Create_HandwritingWasCreated_ReturnsObjectLocation()
+        {
+            // Arrange
+            var expected = new Handwriting() { Id = 1 };
+
+            repositoryMock
+                .Setup(r => r.Create(It.IsAny<Handwriting>()))
+                .Returns(Task.FromResult(expected));
+
+            //Act
+            var result = await controller.Create(new Handwriting()) as CreatedResult;
+
+            // Assert
+            Assert.Equal("/api/handwriting/1", result.Location);
+        }
+
+        [Fact]
+        public async Task Create_HandwritingWasCreated_ReturnsObjectValue()
+        {
+            var expected = new Handwriting() { Id = 1 };
+
+            repositoryMock
+                .Setup(r => r.Create(It.IsAny<Handwriting>()))
+                .Returns(Task.FromResult(expected));
+
+            //Act
+            var result = await controller.Create(new Handwriting()) as CreatedResult;
+
+            // Assert
+            Assert.Equal(expected, result.Value);
+
+        }
+
+        [Fact]
+        public async Task Update_NoHandwritingExists_ReturnsNotFound()
+        {
+            // Arrange
+            Handwriting expected = null;
+
+            repositoryMock
+                .Setup(r => r.GetById(It.IsAny<int>()))
+                .Returns(Task.FromResult(expected));
+
+            // Act
+            var result = await controller.Update(1, new Handwriting());
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public async Task Update_HandwritingUpdated_ReturnsNoContent()
+        {
+            // Arrange
+            var expected = new Handwriting() { Id = 1 };
+
+            repositoryMock
+                .Setup(r => r.Update(It.IsAny<Handwriting>()))
+                .Returns(Task.FromResult(expected));
+
+            repositoryMock
+                .Setup(r => r.GetById(It.IsAny<int>()))
+                .Returns(Task.FromResult(expected));
+
+            // Act
+            var result = await controller.Update(1, new Handwriting()) as NoContentResult;
+
+            // Assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public async Task Delete_HandwritingWasNotFound_ReturnsNotFoundResult()
+        {
+            Handwriting expected = null;
+
+            repositoryMock
+                .Setup(r => r.GetById(It.IsAny<int>()))
+                .Returns(Task.FromResult(expected));
+
+            // Act
+            var result = await controller.Delete(1, new Handwriting());
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public async Task Delete_HandwritingWasDeleted_ReturnsNoContentResult()
+        {
+            // Arrange
+            var expected = new Handwriting() { Id = 1 };
+
+            repositoryMock
+                .Setup(r => r.GetById(It.IsAny<int>()))
+                .Returns(Task.FromResult(expected));
+
+            repositoryMock
+                .Setup(r => r.Delete(It.IsAny<Handwriting>()));
+
+            // Act
+            var result = await controller.Delete(1, new Handwriting()) as NoContentResult;
+
+            //
+            Assert.IsType<NoContentResult>(result);
+        }
     }
 }
