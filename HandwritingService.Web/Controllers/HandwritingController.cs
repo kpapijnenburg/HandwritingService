@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HandwritingService.Web.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class HandwritingController : ControllerBase
     {
@@ -20,10 +19,23 @@ namespace HandwritingService.Web.Controllers
             this.repository = repository;
         }
 
-        [HttpGet]
+        [HttpGet("/api/handwriting")]
         public async Task<IActionResult> Get()
         {
             return Ok(await repository.GetAll());
+        }
+
+        [HttpGet("/api/handwriting/{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var handwriting = await repository.GetById(id);
+
+            if (handwriting == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(handwriting);
         }
     }
 }
