@@ -15,12 +15,14 @@ namespace HandwritingService.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostEnvironment enviroment)
         {
             Configuration = configuration;
+            Enviroment = enviroment;
         }
 
         public IConfiguration Configuration { get; set; }
+        public IHostEnvironment Enviroment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -28,10 +30,15 @@ namespace HandwritingService.Web
         {
             services.AddControllers();
 
-            services.AddDbContext<HandwritingContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
-
             services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
+
+            if (Enviroment.IsEnvironment("Testing"))
+            {
+                return;
+            }
+
+            services.AddDbContext<HandwritingContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

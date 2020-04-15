@@ -1,11 +1,11 @@
-﻿using HandwritingService.DAL;
-using HandwritingService.DAL.Repositories;
-using HandwritingService.Domain;
-using HandwritingService.Web;
-using KPA.Database.Abstractions;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using System;
+using Microsoft.Extensions.DependencyInjection;
+using KPA.Database.Abstractions;
+using HandwritingService.Web;
+using HandwritingService.Domain;
+using HandwritingService.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace HandwritingService.IntegrationTests
 {
@@ -15,16 +15,25 @@ namespace HandwritingService.IntegrationTests
         {
             builder.UseEnvironment("Testing");
 
-            builder.ConfigureServices((services, _) =>
+            builder.ConfigureServices(services =>
             {
+                // Add ApplicationDbContext using an in-memory database for testing.
                 services.AddDbContext<HandwritingContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
+                {
+                    options.UseInMemoryDatabase("DummyDB");
+                });
 
+                var sp = services.BuildServiceProvider();
 
-                services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
+                using (var scope = sp.CreateScope())
+                {
+                    var scopedServices = scope.ServiceProvider;
+                    var db = scopedServices.GetRequiredService<HandwritingContext>();
+
+                    db.Database.EnsureCreated();
+                }
+
             });
-
-            base.ConfigureWebHost(builder);
         }
     }
 }
