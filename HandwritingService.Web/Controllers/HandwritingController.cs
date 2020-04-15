@@ -37,5 +37,6 @@ namespace HandwritingService.Web.Controllers
 
             return Ok(handwriting);
         }
+
     }
 }
