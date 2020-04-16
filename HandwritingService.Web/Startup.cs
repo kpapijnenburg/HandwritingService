@@ -10,6 +10,7 @@ using HandwritingService.DAL;
 using HandwritingService.DAL.Repositories;
 using HandwritingService.Domain;
 using KPA.Database.Abstractions;
+using System;
 
 namespace HandwritingService.Web
 {
@@ -42,11 +43,17 @@ namespace HandwritingService.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HandwritingContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            // Kan onverwachte resultaten opleveren.
+            if (env.IsDevelopment() || env.IsProduction())
+            {
+                context.Database.Migrate();
             }
 
             app.UseRouting();
