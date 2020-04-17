@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BIED.Messaging.Abstractions;
 using HandwritingService.Domain;
 using KPA.Database.Abstractions;
 using Microsoft.AspNetCore.Http;
@@ -13,10 +14,12 @@ namespace HandwritingService.Web.Controllers
     public class HandwritingController : ControllerBase
     {
         private readonly IRepository<Handwriting> repository;
+        private readonly IMessageProducer messageProducer;
 
-        public HandwritingController(IRepository<Handwriting> repository)
+        public HandwritingController(IRepository<Handwriting> repository, IMessageProducer messageProducer)
         {
             this.repository = repository;
+            this.messageProducer = messageProducer;
         }
 
         [HttpGet("/api/handwriting")]
