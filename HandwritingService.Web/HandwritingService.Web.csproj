@@ -24,8 +24,4 @@
     <ProjectReference Include="..\HandwritingService.Domain\HandwritingService.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Messaging\Consumers\" />
-  </ItemGroup>
-
 </Project>

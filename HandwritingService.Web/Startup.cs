@@ -13,6 +13,7 @@ using KPA.Database.Abstractions;
 using System;
 using BIED.Messaging.Config;
 using BIED.Messaging.Extensions;
+using HandwritingService.Web.Messaging.Consumers;
 
 namespace HandwritingService.Web
 {
@@ -43,9 +44,12 @@ namespace HandwritingService.Web
             //services.AddDbContext<HandwritingContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
 
+            services.AddDbContext<HandwritingContext>(options => options.UseInMemoryDatabase("InMemDB"));
+            
             services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMq"));
 
             services.AddRabbitMq();
+            services.AddHostedService<NoteCreatedMessageConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
