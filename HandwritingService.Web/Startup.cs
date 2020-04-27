@@ -33,15 +33,17 @@ namespace HandwritingService.Web
         {
             services.AddControllers();
 
-            services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
+            services.AddTransient<IRepository<Handwriting>, DummyHandwritingRepository>();
 
             if (Enviroment.IsEnvironment("Testing"))
             {
                 return;
             }
 
-            services.AddDbContext<HandwritingContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
+            //services.AddDbContext<HandwritingContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
+
+            services.AddDbContext<HandwritingContext>(options => options.UseInMemoryDatabase("InMemory DB"));
 
             services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMq"));
 
@@ -56,11 +58,11 @@ namespace HandwritingService.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            // Kan onverwachte resultaten opleveren.
-            if (env.IsDevelopment() || env.IsProduction())
-            {
-                context.Database.Migrate();
-            }
+            //// Kan onverwachte resultaten opleveren.
+            //if (env.IsDevelopment() || env.IsProduction())
+            //{
+            //    context.Database.Migrate();
+            //}
 
             app.UseRouting();
 
