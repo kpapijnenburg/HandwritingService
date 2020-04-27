@@ -1,4 +1,5 @@
-﻿using HandwritingService.Domain;
+﻿using BIED.Messaging.Abstractions;
+using HandwritingService.Domain;
 using HandwritingService.Web.Controllers;
 using KPA.Database.Abstractions;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +15,14 @@ namespace HandwritingService.Tests
     public class HandwritingControllerTests
     {
         private readonly HandwritingController controller;
+
         private readonly Mock<IRepository<Handwriting>> repositoryMock;
+        private readonly Mock<IMessageProducer> messageProducerMock;
 
         public HandwritingControllerTests()
         {
             repositoryMock = new Mock<IRepository<Handwriting>>();
-            controller = new HandwritingController(repositoryMock.Object);
+            controller = new HandwritingController(repositoryMock.Object, messageProducerMock.Object);
         }
 
         [Fact]

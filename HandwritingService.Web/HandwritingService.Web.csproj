@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="Messaging\Consumers\" />
-    <Folder Include="Messaging\Messages\" />
   </ItemGroup>
 
 </Project>

@@ -43,8 +43,6 @@ namespace HandwritingService.Web
             //services.AddDbContext<HandwritingContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
 
-            services.AddDbContext<HandwritingContext>(options => options.UseInMemoryDatabase("InMemory DB"));
-
             services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMq"));
 
             services.AddRabbitMq();
