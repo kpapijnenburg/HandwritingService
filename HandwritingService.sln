@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandwritingService.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HandwritingService.IntegrationTests", "HandwritingService.IntegrationTests\HandwritingService.IntegrationTests.csproj", "{7A3A200E-4BE9-4BD4-810D-36FD4E1D480C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandwritingService.Logic", "HandwritingService.Logic\HandwritingService.Logic.csproj", "{F09DF484-703E-4D86-B3C0-D6DE2E01F289}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{7A3A200E-4BE9-4BD4-810D-36FD4E1D480C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A3A200E-4BE9-4BD4-810D-36FD4E1D480C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A3A200E-4BE9-4BD4-810D-36FD4E1D480C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F09DF484-703E-4D86-B3C0-D6DE2E01F289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F09DF484-703E-4D86-B3C0-D6DE2E01F289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F09DF484-703E-4D86-B3C0-D6DE2E01F289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F09DF484-703E-4D86-B3C0-D6DE2E01F289}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
