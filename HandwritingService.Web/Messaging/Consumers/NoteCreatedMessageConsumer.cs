@@ -1,5 +1,6 @@
 ﻿using BIED.Messaging;
 using BIED.Messaging.Abstractions;
+using HandwritingService.Logic.Abstract;
 using HandwritingService.Web.Messaging.Messages;
 using RabbitMQ.Client;
 using System;
@@ -11,17 +12,25 @@ namespace HandwritingService.Web.Messaging.Consumers
 {
     public class NoteCreatedMessageConsumer : MessageConsumer<NoteCreatedMessage>
     {
-        public IMessageProducer MessageProducer{ get; set; }
+        private IMessageProducer MessageProducer { get; set; }
+        public ITextExtractor TextExtractor { get; set; }
 
-        public NoteCreatedMessageConsumer(IConnection connection, IMessageProducer messageProducer) : base(connection, "notes.created", "")
+        public NoteCreatedMessageConsumer(IConnection connection, IMessageProducer messageProducer, ITextExtractor textExtractor) : base(connection, "notes.created", "")
         {
             MessageProducer = messageProducer;
+            TextExtractor = textExtractor;
         }
 
-        public override Task ProcessMessageAsync(NoteCreatedMessage message)
+        public override async Task ProcessMessageAsync(NoteCreatedMessage message)
         {
-            Console.WriteLine("Got message with NoteID" + message.NoteId);
-            return Task.CompletedTask;
+            // Extract text
+            var text = await TextExtractor.FromImage(message.Image);
+
+            // Construct response message
+            var responseMessage = new NoteProcessedMessage() { NoteId = message.NoteId, Content = text };
+
+            // Send return message 
+            await MessageProducer.SendAsync(responseMessage, "notes.processed");
         }
     }
 }

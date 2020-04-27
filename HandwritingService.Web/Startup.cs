@@ -14,6 +14,8 @@ using System;
 using BIED.Messaging.Config;
 using BIED.Messaging.Extensions;
 using HandwritingService.Web.Messaging.Consumers;
+using HandwritingService.Logic.Abstract;
+using HandwritingService.Logic;
 
 namespace HandwritingService.Web
 {
@@ -50,6 +52,8 @@ namespace HandwritingService.Web
 
             services.AddRabbitMq();
             services.AddHostedService<NoteCreatedMessageConsumer>();
+
+            services.AddSingleton<ITextExtractor, DummyTextExtractor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

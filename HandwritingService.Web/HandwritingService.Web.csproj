@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HandwritingService.DAL\HandwritingService.DAL.csproj" />
     <ProjectReference Include="..\HandwritingService.Domain\HandwritingService.Domain.csproj" />
+    <ProjectReference Include="..\HandwritingService.Logic\HandwritingService.Logic.csproj" />
   </ItemGroup>
 
 </Project>
