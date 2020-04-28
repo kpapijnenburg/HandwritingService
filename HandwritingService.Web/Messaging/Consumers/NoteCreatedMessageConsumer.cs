@@ -4,6 +4,7 @@ using HandwritingService.Domain;
 using HandwritingService.Logic.Abstract;
 using HandwritingService.Web.Messaging.Messages;
 using KPA.Database.Abstractions;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,7 @@ namespace HandwritingService.Web.Messaging.Consumers
                 var content = await TextExtractor.FromImage(message.Image);
 
                 var handwriting = await CreateHandwriting(content, message.Image, message.NoteId);
+                Console.WriteLine("Created the following object: " + JsonConvert.SerializeObject(handwriting), Formatting.Indented);
 
                 responseMessage.state = State.Finished;
             }

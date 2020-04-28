@@ -4,14 +4,16 @@ using HandwritingService.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HandwritingService.DAL.Migrations
 {
     [DbContext(typeof(HandwritingContext))]
-    partial class HandwritingContextModelSnapshot : ModelSnapshot
+    [Migration("20200428142433_AddedContentToHandwriting")]
+    partial class AddedContentToHandwriting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
