@@ -19,7 +19,12 @@ namespace HandwritingService.DAL.Repositories
 
         public Task<Handwriting> Create(Handwriting entity)
         {
-            throw new NotImplementedException();
+            var count = Handwritings.Count;
+            entity.Id = count += 1;
+
+            Handwritings.Add(entity);
+
+            return Task.FromResult(entity);
         }
 
         public Task Delete(Handwriting entity)

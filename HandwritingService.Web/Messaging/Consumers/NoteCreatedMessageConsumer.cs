@@ -36,7 +36,7 @@ namespace HandwritingService.Web.Messaging.Consumers
             {
                 var content = await TextExtractor.FromImage(message.Image);
 
-                var handwriting = await CreateHandwriting(content, message.Image);
+                var handwriting = await CreateHandwriting(content, message.Image, message.NoteId);
 
                 responseMessage.state = State.Finished;
             }
@@ -51,7 +51,7 @@ namespace HandwritingService.Web.Messaging.Consumers
             }
         }
 
-        private async Task<Handwriting> CreateHandwriting(string content, byte[] image)
+        private async Task<Handwriting> CreateHandwriting(string content, byte[] image, int noteId)
         {
             return await Repository.Create(new Handwriting()
             {
@@ -59,7 +59,11 @@ namespace HandwritingService.Web.Messaging.Consumers
                 Image = image,
                 State = State.Finished,
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                UpdatedAt = DateTime.Now,
+                Note = new Note()
+                {
+                    Id = noteId
+                }
             });
         }
     }
