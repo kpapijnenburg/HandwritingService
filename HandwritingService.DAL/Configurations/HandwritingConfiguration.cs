@@ -13,12 +13,6 @@ namespace HandwritingService.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Handwriting> builder)
         {
-            builder
-                .HasOne(h => h.Note)
-                .WithOne(n => n.Handwriting)
-                .HasForeignKey<Note>(n => n.HandwritingId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasData(new Handwriting()
             {
                 Id = 1,

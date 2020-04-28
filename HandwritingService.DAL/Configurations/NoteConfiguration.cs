@@ -11,11 +11,6 @@ namespace HandwritingService.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<Note> builder)
         {
-            builder
-                .HasOne(n => n.Handwriting)
-                .WithOne(h => h.Note)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasData(new Note()
             {
                 Id = 1,

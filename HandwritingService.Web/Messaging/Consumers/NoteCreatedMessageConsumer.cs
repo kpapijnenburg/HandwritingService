@@ -62,10 +62,7 @@ namespace HandwritingService.Web.Messaging.Consumers
                 State = State.Finished,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                Note = new Note()
-                {
-                    Id = noteId
-                }
+                NoteId = noteId
             });
         }
     }
