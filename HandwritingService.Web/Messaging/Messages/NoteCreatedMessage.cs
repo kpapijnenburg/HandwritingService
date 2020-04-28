@@ -9,6 +9,5 @@ namespace HandwritingService.Web.Messaging.Messages
     {
         public int NoteId { get; set; }
         public byte[] Image { get; set; }
-
     }
 }
