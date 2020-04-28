@@ -14,12 +14,10 @@ namespace HandwritingService.Web.Controllers
     public class HandwritingController : ControllerBase
     {
         private readonly IRepository<Handwriting> repository;
-        private readonly IMessageProducer messageProducer;
 
-        public HandwritingController(IRepository<Handwriting> repository, IMessageProducer messageProducer)
+        public HandwritingController(IRepository<Handwriting> repository)
         {
             this.repository = repository;
-            this.messageProducer = messageProducer;
         }
 
         [HttpGet("/api/handwriting")]

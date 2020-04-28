@@ -17,12 +17,12 @@ namespace HandwritingService.Tests
         private readonly HandwritingController controller;
 
         private readonly Mock<IRepository<Handwriting>> repositoryMock;
-        private readonly Mock<IMessageProducer> messageProducerMock;
 
         public HandwritingControllerTests()
         {
             repositoryMock = new Mock<IRepository<Handwriting>>();
-            controller = new HandwritingController(repositoryMock.Object, messageProducerMock.Object);
+
+            controller = new HandwritingController(repositoryMock.Object);
         }
 
         [Fact]
