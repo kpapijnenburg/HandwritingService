@@ -6,6 +6,7 @@ using HandwritingService.Web;
 using HandwritingService.Domain;
 using HandwritingService.DAL;
 using Microsoft.EntityFrameworkCore;
+using HandwritingService.DAL.Repositories;
 
 namespace HandwritingService.IntegrationTests
 {
@@ -32,6 +33,8 @@ namespace HandwritingService.IntegrationTests
 
                     db.Database.EnsureCreated();
                 }
+
+                services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
 
             });
         }

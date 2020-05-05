@@ -28,6 +28,11 @@ namespace HandwritingService.Web.Messaging.Consumers
 
         public override async Task ProcessMessageAsync(NoteCreatedMessage message)
         {
+            if(message == null || message.Image == null || !message.Image.Any())
+            {
+                return;
+            }
+
             var content = await TextExtractor.FromImage(message.Image);
 
             await CreateHandwriting(content, message.Image, message.NoteId);
