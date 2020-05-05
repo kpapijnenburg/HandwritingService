@@ -67,7 +67,7 @@ namespace HandwritingService.Tests
         public async Task ProcessMessageAsync_MessageImageIsEmpty_Returns()
         {
             // Arrange
-            var message = new NoteCreatedMessage() { NoteId = 1, Image =  new byte[0]};
+            var message = new NoteCreatedMessage() { NoteId = 1, Image = new byte[0] };
 
             // Act
             await consumer.ProcessMessageAsync(message);
@@ -75,6 +75,71 @@ namespace HandwritingService.Tests
             // Assert
             textExtractorMock.Verify(t => t.FromImage(It.IsAny<byte[]>()), Times.Never);
             repositoryMock.Verify(r => r.Create(It.IsAny<Handwriting>()), Times.Never);
+        }
+
+        [Fact]
+        public async Task CreateHandwriting_SetsState_ToFinished()
+        {
+            // Arrange
+            var message = new NoteCreatedMessage() { NoteId = 1, Image = new byte[1] };
+
+            // Act
+            await consumer.ProcessMessageAsync(message);
+
+            // Assert
+            repositoryMock.Verify(r => r.Create(It.Is<Handwriting>(h => h.State == State.Finished)));
+        }
+
+        [Fact]
+        public async Task CreateHandwriting_CreatedAt_SetToDateOfToday()
+        {
+            // Arrange
+            var message = new NoteCreatedMessage() { NoteId = 1, Image = new byte[1] };
+
+            // Act
+            await consumer.ProcessMessageAsync(message);
+
+            // Assert
+            repositoryMock.Verify(r => r.Create(It.Is<Handwriting>(h => h.CreatedAt.Date == DateTime.Today.Date)));
+        }
+
+        [Fact]
+        public async Task CreateHandwriting_UpdatedAt_SetToDateOfToday()
+        {
+            // Arrange
+            var message = new NoteCreatedMessage() { NoteId = 1, Image = new byte[1] };
+
+            // Act
+            await consumer.ProcessMessageAsync(message);
+
+            // Assert
+            repositoryMock.Verify(r => r.Create(It.Is<Handwriting>(h => h.UpdatedAt.Date == DateTime.Today.Date)));
+        }
+
+        [Fact]
+        public async Task CreateHandwriting_NoteId_SetToMessageNoteId()
+        {
+            // Arrange
+            var message = new NoteCreatedMessage() { NoteId = 1, Image = new byte[1] };
+
+            // Act
+            await consumer.ProcessMessageAsync(message);
+
+            // Assert
+            repositoryMock.Verify(r => r.Create(It.Is<Handwriting>(h => h.NoteId == message.NoteId)));
+        }
+        
+        [Fact]
+        public async Task CreateHandwriting_Image_SetToMessageImage()
+        {
+            // Arrange
+            var message = new NoteCreatedMessage() { NoteId = 1, Image = new byte[1] };
+
+            // Act
+            await consumer.ProcessMessageAsync(message);
+
+            // Assert
+            repositoryMock.Verify(r => r.Create(It.Is<Handwriting>(h => h.Image == message.Image)));
         }
     }
 }
