@@ -37,8 +37,7 @@ namespace HandwritingService.Web.Messaging.Consumers
             {
                 var content = await TextExtractor.FromImage(message.Image);
 
-                var handwriting = await CreateHandwriting(content, message.Image, message.NoteId);
-                Console.WriteLine("Created the following object: " + JsonConvert.SerializeObject(handwriting), Formatting.Indented);
+                await CreateHandwriting(content, message.Image, message.NoteId);
 
                 responseMessage.state = State.Finished;
             }
