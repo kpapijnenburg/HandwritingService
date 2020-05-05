@@ -15,41 +15,22 @@ namespace HandwritingService.Web.Messaging.Consumers
 {
     public class NoteCreatedMessageConsumer : MessageConsumer<NoteCreatedMessage>
     {
-        private readonly IMessageProducer MessageProducer;
         private readonly ITextExtractor TextExtractor;
         private readonly IRepository<Handwriting> Repository;
 
-        public NoteCreatedMessageConsumer(IConnection connection, 
-            IMessageProducer messageProducer, 
-            ITextExtractor textExtractor, 
+        public NoteCreatedMessageConsumer(IConnection connection,
+            ITextExtractor textExtractor,
             IRepository<Handwriting> repository) : base(connection, "notes.created", "")
         {
-            MessageProducer = messageProducer;
             TextExtractor = textExtractor;
             Repository = repository;
         }
 
         public override async Task ProcessMessageAsync(NoteCreatedMessage message)
         {
-            var responseMessage = new NoteProcessedMessage() { NoteId = message.NoteId };
+            var content = await TextExtractor.FromImage(message.Image);
 
-            try
-            {
-                var content = await TextExtractor.FromImage(message.Image);
-
-                await CreateHandwriting(content, message.Image, message.NoteId);
-
-                responseMessage.state = State.Finished;
-            }
-            catch (Exception e)
-            {
-                responseMessage.Exception = e;
-                responseMessage.state = State.Error;
-            }
-            finally
-            {
-                await MessageProducer.SendAsync(responseMessage, "notes.processed");
-            }
+            await CreateHandwriting(content, message.Image, message.NoteId);
         }
 
         private async Task<Handwriting> CreateHandwriting(string content, byte[] image, int noteId)
