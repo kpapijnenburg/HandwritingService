@@ -30,6 +30,7 @@ namespace HandwritingService.Web.Messaging.Consumers
         {
             if(message == null || message.Image == null || !message.Image.Any())
             {
+                Console.WriteLine("Message cannot be processed because the message is empty or the image in the message is empty. \r\n The following message was sent: \r\n ", message);
                 return;
             }
 
