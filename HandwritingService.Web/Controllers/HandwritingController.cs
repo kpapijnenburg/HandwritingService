@@ -73,5 +73,11 @@ namespace HandwritingService.Web.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("/api/handwriting")]
+        public async Task<IActionResult> GetByNoteId(int noteId)
+        {
+            return Ok(await repository.FindAll(h => h.NoteId == noteId));
+        }
     }
 }

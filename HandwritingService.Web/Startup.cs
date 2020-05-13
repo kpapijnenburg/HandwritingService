@@ -44,6 +44,15 @@ namespace HandwritingService.Web
             //services.AddDbContext<HandwritingContext>(options => options.UseInMemoryDatabase("InMemDB"));
             //services.AddTransient<IRepository<Handwriting>, DummyHandwritingRepository>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowLocalHost",
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod();
+                                  });
+            });
+
             services.AddDbContext<HandwritingContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
 
@@ -73,6 +82,8 @@ namespace HandwritingService.Web
             }
 
             app.UseRouting();
+
+            app.UseCors("AllowLocalHost");
 
             app.UseEndpoints(endpoints =>
             {
