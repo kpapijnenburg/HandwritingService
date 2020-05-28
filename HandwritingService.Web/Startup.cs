@@ -36,20 +36,20 @@ namespace HandwritingService.Web
         {
             services.AddControllers();
 
-            //if (Enviroment.IsEnvironment("Testing"))
-            //{
-            //    return;
-            //}
+            if (Enviroment.IsEnvironment("Testing"))
+            {
+                return;
+            }
 
             //services.AddDbContext<HandwritingContext>(options => options.UseInMemoryDatabase("InMemDB"));
-            //services.AddTransient<IRepository<Handwriting>, DummyHandwritingRepository>();
+            //services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
 
             services.AddCors(options =>
             {
                 options.AddPolicy(name: "AllowLocalHost",
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod();
+                                      builder.WithOrigins("http://localhost:8080", "http://127.0.0.1:8080").AllowAnyHeader().AllowAnyMethod();
                                   });
             });
 
@@ -57,7 +57,6 @@ namespace HandwritingService.Web
                 options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
 
             services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
-
 
             services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMq"));
 

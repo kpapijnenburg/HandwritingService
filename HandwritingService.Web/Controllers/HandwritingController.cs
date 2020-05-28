@@ -26,6 +26,13 @@ namespace HandwritingService.Web.Controllers
             return Ok(await repository.GetAll());
         }
 
+
+        [HttpGet("/api/handwriting/notes/{noteId}")]
+        public async Task<IActionResult> GetByNoteId(int noteId)
+        {
+            return Ok(await repository.FindAll(h => h.NoteId == noteId));
+        }
+
         [HttpGet("/api/handwriting/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -72,12 +79,6 @@ namespace HandwritingService.Web.Controllers
             await repository.Delete(handwriting);
 
             return NoContent();
-        }
-
-        [HttpGet("/api/handwriting")]
-        public async Task<IActionResult> GetByNoteId(int noteId)
-        {
-            return Ok(await repository.FindAll(h => h.NoteId == noteId));
         }
     }
 }
