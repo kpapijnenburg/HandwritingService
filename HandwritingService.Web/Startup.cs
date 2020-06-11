@@ -16,6 +16,11 @@ using BIED.Messaging.Extensions;
 using HandwritingService.Web.Messaging.Consumers;
 using HandwritingService.Logic.Abstract;
 using HandwritingService.Logic;
+using BIED.Messaging.Abstractions;
+using HandwritingService.Web.Messaging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HandwritingService.Web
 {
@@ -41,29 +46,53 @@ namespace HandwritingService.Web
                 return;
             }
 
-            //services.AddDbContext<HandwritingContext>(options => options.UseInMemoryDatabase("InMemDB"));
-            //services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
-
             services.AddCors(options =>
             {
-                options.AddPolicy(name: "AllowLocalHost",
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("http://localhost:8080", "http://127.0.0.1:8080").AllowAnyHeader().AllowAnyMethod();
-                                  });
+                options.AddPolicy(name: "AllowLocalHost", builder => { builder.WithOrigins("http://localhost:8080", "http://127.0.0.1:8080").AllowAnyHeader().AllowAnyMethod(); });
             });
 
-            services.AddDbContext<HandwritingContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
+            if (Enviroment.IsProduction())
+            {
+                services.AddDbContext<HandwritingContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("HandwritingContext")));
 
-            services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
+                services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
 
-            services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMq"));
+                services.Configure<RabbitMqConfig>(Configuration.GetSection("RabbitMq"));
 
-            services.AddRabbitMq();
-            services.AddHostedService<NoteCreatedMessageConsumer>();
+                services.AddRabbitMq();
+                services.AddHostedService<NoteCreatedMessageConsumer>();
 
-            services.AddSingleton<ITextExtractor, DummyTextExtractor>();
+                // TODO: Replace with real text extractor.
+                services.AddSingleton<ITextExtractor, DummyTextExtractor>();
+            }
+
+            if (Enviroment.IsDevelopment())
+            {
+                services.AddDbContext<HandwritingContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("LocalDB")));
+
+                services.AddTransient<IRepository<Handwriting>, HandwritingRepository>();
+
+                services.AddTransient<IMessageProducer, DummyMessageProducer>();
+
+                services.AddSingleton<ITextExtractor, DummyTextExtractor>();
+            }
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = Configuration["Jwt:Issuer"],
+                            ValidAudience = Configuration["Jwt:Audience"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                        };
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,7 +103,6 @@ namespace HandwritingService.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            //// Kan onverwachte resultaten opleveren.
             if (env.IsDevelopment() || env.IsProduction())
             {
                 context.Database.Migrate();
@@ -83,6 +111,9 @@ namespace HandwritingService.Web
             app.UseRouting();
 
             app.UseCors("AllowLocalHost");
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

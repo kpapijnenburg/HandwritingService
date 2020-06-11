@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using BIED.Messaging.Abstractions;
 using HandwritingService.Domain;
 using KPA.Database.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HandwritingService.Web.Controllers
 {
+    [Authorize]
     [ApiController]
     public class HandwritingController : ControllerBase
     {
