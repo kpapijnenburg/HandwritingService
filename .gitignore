@@ -351,3 +351,4 @@ MigrationBackup/
 
 .vscode
 /HandwritingService.Web/Messaging/Messages/DummyMessage.json
+/HandwritingService.Logic/credentials.json

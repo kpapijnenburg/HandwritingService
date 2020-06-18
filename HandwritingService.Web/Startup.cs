@@ -48,7 +48,7 @@ namespace HandwritingService.Web
 
             services.AddCors(options =>
             {
-                options.AddPolicy(name: "AllowLocalHost", builder => { builder.WithOrigins("http://localhost:8080", "http://127.0.0.1:8080").AllowAnyHeader().AllowAnyMethod(); });
+                options.AddPolicy(name: "AllowLocalHost", builder => builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
             });
 
             if (Enviroment.IsProduction())
@@ -64,7 +64,7 @@ namespace HandwritingService.Web
                 services.AddHostedService<NoteCreatedMessageConsumer>();
 
                 // TODO: Replace with real text extractor.
-                services.AddSingleton<ITextExtractor, DummyTextExtractor>();
+                services.AddSingleton<ITextExtractor, GoogleCloudTextExtractor>();
             }
 
             if (Enviroment.IsDevelopment())
