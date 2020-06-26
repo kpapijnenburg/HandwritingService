@@ -9,4 +9,10 @@
     <PackageReference Include="Google.Cloud.Vision.V1" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

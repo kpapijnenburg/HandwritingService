@@ -20,14 +20,18 @@ namespace HandwritingService.Logic
             var response = await client.DetectDocumentTextAsync(image);
             return response.Text;
         }
-
         private Task<ImageAnnotatorClient> GetClientAsync(string credentialsFile)
         {
+
             return new ImageAnnotatorClientBuilder()
             {
-                CredentialsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), credentialsFile)
+                CredentialsPath = GetPath(credentialsFile),
             }
             .BuildAsync();
+        }
+        public string GetPath(string credentialsFile)
+        {
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), credentialsFile);
         }
     }
 }

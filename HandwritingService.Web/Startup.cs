@@ -63,7 +63,6 @@ namespace HandwritingService.Web
                 services.AddRabbitMq();
                 services.AddHostedService<NoteCreatedMessageConsumer>();
 
-                // TODO: Replace with real text extractor.
                 services.AddSingleton<ITextExtractor, GoogleCloudTextExtractor>();
             }
 
